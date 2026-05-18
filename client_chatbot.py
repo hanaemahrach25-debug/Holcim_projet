@@ -76,7 +76,10 @@ h1 {
 # Logo
 # =========================
 
-st.image("HOLCIM_LOGO.png", width=220)
+col1, col2, col3 = st.columns([1,2,1])
+
+with col2:
+    st.image("holcim_logo.png", width=220)
 
 # =========================
 # Titre
