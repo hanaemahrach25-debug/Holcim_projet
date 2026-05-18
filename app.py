@@ -62,65 +62,6 @@ st.plotly_chart(fig1, use_container_width=True)
 
 fig2 = px.bar(df, x="Produit", y="Couverture jours", title="Couverture du stock en jours")
 st.plotly_chart(fig2, use_container_width=True)
-# =========================
-# Prédiction mois prochain
-# =========================
-
-st.subheader(" Prédiction du stock du mois prochain")
-
-jours_restants = 30
-
-df["Prévision mois prochain"] = (
-    df["Stock actuel"] -
-    (df["Consommation moyenne/jour"] * jours_restants)
-)
-
-df["Prévision mois prochain"] = df["Prévision mois prochain"].round(2)
-
-df["Statut futur"] = df["Prévision mois prochain"].apply(
-    lambda x:
-    "Rupture prévue" if x <= 0
-    else "Stock faible" if x <= 50
-    else "Stock stable"
-)
-
-st.dataframe(
-    df[[
-        "Produit",
-        "Stock actuel",
-        "Consommation moyenne/jour",
-        "Prévision mois prochain",
-        "Statut futur"
-    ]],
-    use_container_width=True
-)
-
-fig_prediction = px.bar(
-    df,
-    x="Produit",
-    y="Prévision mois prochain",
-    color="Statut futur",
-    title="Prévision du stock du mois prochain"
-)
-
-st.plotly_chart(fig_prediction, use_container_width=True)
-
-for _, row in df.iterrows():
-
-    if row["Statut futur"] == "Rupture prévue":
-        st.error(
-            f" {row['Produit']} risque une rupture le mois prochain."
-        )
-
-    elif row["Statut futur"] == "Stock faible":
-        st.warning(
-            f" {row['Produit']} aura un stock faible le mois prochain."
-        )
-
-    else:
-        st.success(
-            f" {row['Produit']} aura un stock stable."
-        )
 
 st.subheader(" Prévision des ruptures")
 
