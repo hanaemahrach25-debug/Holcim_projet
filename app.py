@@ -129,7 +129,7 @@ def load_data():
 
 df = load_data()
 
-st.title("Gestion intelligente et suivi des stocks ")
+st.title("Système intelligent de gestion des stocks - Holcim")
 st.markdown("""
 <div style="
 background:white;
@@ -139,8 +139,9 @@ box-shadow:0 4px 15px rgba(0,0,0,0.08);
 text-align:center;
 font-size:18px;
 color:#333;">
-Tableau de bord intelligent pour suivre les stocks, anticiper les ruptures,
-automatiser les alertes et répondre aux clients selon les données disponibles.
+Tableau de bord intelligent destiné aux responsables logistiques pour suivre
+les niveaux de stock, anticiper les ruptures, surveiller les produits critiques
+et faciliter la prise de décision.
 </div>
 """, unsafe_allow_html=True)
 
@@ -244,27 +245,61 @@ for _, row in df.iterrows():
     else:
         st.success(f" {row['Produit']} : stock suffisant.")
 
-st.subheader(" Chatbot client")
+# =========================
+# Assistant logistique
+# =========================
 
-question = st.text_input("Posez une question sur un produit :")
+st.subheader(" Assistant logistique Holcim")
+
+st.markdown("""
+<div style="
+background:white;
+padding:15px;
+border-radius:15px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+font-size:16px;">
+Cet assistant aide les responsables à consulter rapidement
+les informations du stock et les niveaux critiques.
+</div>
+""", unsafe_allow_html=True)
+
+question = st.text_input(
+    "Responsable : posez une question sur un produit"
+)
 
 if question:
+
     question_lower = question.lower()
     produit_trouve = None
 
     for produit in df["Produit"]:
+
         if str(produit).lower() in question_lower:
             produit_trouve = produit
             break
 
     if produit_trouve:
+
         ligne = df[df["Produit"] == produit_trouve].iloc[0]
 
-        st.info(
-            f"Le produit {produit_trouve} est disponible avec un stock actuel de "
-            f"{round(ligne['Stock actuel'], 2)} unités. "
-            f"La couverture estimée est de {round(ligne['Couverture jours'], 1)} jours. "
-            f"Statut : {ligne['Statut']}."
+        stock = round(ligne["Stock actuel"], 2)
+        couverture = round(ligne["Couverture jours"], 1)
+        statut = ligne["Statut"]
+
+        st.success(
+            f"""
+Produit : {produit_trouve}
+
+Stock actuel : {stock} unités
+
+📅Couverture estimée : {couverture} jours
+
+Statut : {statut}
+"""
         )
+
     else:
-        st.info("Veuillez écrire le nom exact du produit présent dans le tableau.")
+
+        st.warning(
+            "Produit introuvable. Veuillez saisir le nom exact du produit."
+        )
