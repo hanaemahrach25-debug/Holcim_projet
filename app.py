@@ -154,17 +154,29 @@ st.subheader("Tableau de bord analytique")
 
 col_graph1, col_graph2 = st.columns(2)
 
+# =========================
+# Graphiques Dashboard
+# =========================
+
+st.subheader("📊 Tableau de bord analytique")
+
+col_graph1, col_graph2 = st.columns(2)
+
 with col_graph1:
 
-fig1.update_layout(
-    plot_bgcolor="white",
-    paper_bgcolor="white",
-    title_font_size=22,
-    title_font_color="#006b3f",
-    font=dict(color="#333"),
-    xaxis_title="Produit",
-    yaxis_title="Stock actuel"
-)
+    fig1 = px.bar(
+        df,
+        x="Produit",
+        y="Stock actuel",
+        title="Stock actuel par produit",
+        color="Stock actuel",
+        color_continuous_scale=[
+            "#b7e4c7",
+            "#74c69d",
+            "#40916c",
+            "#1b4332"
+        ]
+    )
 
     fig1.update_layout(
         plot_bgcolor="white",
@@ -173,8 +185,7 @@ fig1.update_layout(
         title_font_color="#006b3f",
         font=dict(color="#333"),
         xaxis_title="Produit",
-        yaxis_title="Stock actuel",
-        bordercolor="#ddd"
+        yaxis_title="Stock actuel"
     )
 
     st.plotly_chart(fig1, use_container_width=True)
@@ -202,7 +213,7 @@ with col_graph2:
         title_font_color="#006b3f",
         font=dict(color="#333"),
         xaxis_title="Produit",
-        yaxis_title="Jours",
+        yaxis_title="Jours"
     )
 
     st.plotly_chart(fig2, use_container_width=True)
