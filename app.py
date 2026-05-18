@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -151,29 +150,21 @@ col1.metric("Stock total", round(df["Stock actuel"].sum(), 2))
 col2.metric("Produits en rupture proche", len(df[df["Statut"] == "Rupture proche"]))
 col3.metric("Produits à surveiller", len(df[df["Statut"] == "À surveiller"]))
 
-# =========================
-# Graphiques Dashboard
-# =========================
-
-st.subheader("📊 Tableau de bord analytique")
+st.subheader("Tableau de bord analytique")
 
 col_graph1, col_graph2 = st.columns(2)
 
 with col_graph1:
 
-    fig1 = px.bar(
-        df,
-        x="Produit",
-        y="Stock actuel",
-        title="Stock actuel par produit",
-        color="Stock actuel",
-        color_continuous_scale=[
-            "#b7e4c7",
-            "#74c69d",
-            "#40916c",
-            "#1b4332"
-        ]
-    )
+fig1.update_layout(
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    title_font_size=22,
+    title_font_color="#006b3f",
+    font=dict(color="#333"),
+    xaxis_title="Produit",
+    yaxis_title="Stock actuel"
+)
 
     fig1.update_layout(
         plot_bgcolor="white",
