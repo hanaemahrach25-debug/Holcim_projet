@@ -95,4 +95,3 @@ if question:
         st.warning(
             "Désolé, ce produit n’a pas été trouvé. Veuillez écrire le nom exact du produit."
         )
-ou je vais copier ce code?
