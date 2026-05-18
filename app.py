@@ -218,52 +218,6 @@ with col_graph2:
 
     st.plotly_chart(fig2, use_container_width=True)
 
-# =========================
-# Graphique Prévision
-# =========================
-
-st.subheader("📈 Prévision du stock du mois prochain")
-
-jours_restants = 30
-
-df["Prévision mois prochain"] = (
-    df["Stock actuel"] -
-    (df["Consommation moyenne/jour"] * jours_restants)
-)
-
-df["Prévision mois prochain"] = df["Prévision mois prochain"].round(2)
-
-df["Statut futur"] = df["Prévision mois prochain"].apply(
-    lambda x:
-    "Rupture prévue" if x <= 0
-    else "Stock faible" if x <= 50
-    else "Stock stable"
-)
-
-fig3 = px.bar(
-    df,
-    x="Produit",
-    y="Prévision mois prochain",
-    color="Statut futur",
-    title="Prévision du stock du mois prochain",
-    color_discrete_map={
-        "Rupture prévue": "#d62828",
-        "Stock faible": "#f4a261",
-        "Stock stable": "#2d6a4f"
-    }
-)
-
-fig3.update_layout(
-    plot_bgcolor="white",
-    paper_bgcolor="white",
-    title_font_size=24,
-    title_font_color="#006b3f",
-    font=dict(color="#333"),
-    xaxis_title="Produit",
-    yaxis_title="Stock prévisionnel"
-)
-
-st.plotly_chart(fig3, use_container_width=True)
 
 st.subheader(" Prévision des ruptures")
 
