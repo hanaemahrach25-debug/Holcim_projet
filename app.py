@@ -5,7 +5,7 @@ import plotly.express as px
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
-st.set_page_config(page_title="Stock IA - Holcim", layout="wide")
+st.image("HOLCIM_LOGO.png", width=220)
 st.markdown("""
 <style>
 /* Fond général */
